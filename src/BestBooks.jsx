@@ -1,31 +1,43 @@
 import React from 'react';
+import {useState, useEffect} from 'react';
+import axios from 'axios';
 
-class BestBooks extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      books: []
-    }
-  }
+function BestBooks()  {
 
-  /* TODO: Make a GET request to your API to fetch all the books from the database  */
+  const [data, setData] = useState([])
 
-  render() {
+  useEffect(() => {
+    axios.get('https://localhost:3001/books')
+      .then(response => {
+        console.log(response);
+        setData(response.data);
+      })
+      .catch(error => console.error('There was an error!', error));
+  }, []); // Empty array means this effect runs once after the initial render
 
-    /* TODO: render all the books in a Carousel */
+  return (
+    <div>
+      <h1>Data from API:</h1>
+      <p>{data}</p>
+    </div>
+  );
 
-    return (
-      <>
-        <h2>My Essential Lifelong Learning &amp; Formation Shelf</h2>
+//   render() {
 
-        {this.state.books.length ? (
-          <p>Book Carousel coming soon</p>
-        ) : (
-          <h3>No Books Found :(</h3>
-        )}
-      </>
-    )
-  }
+//     /* TODO: render all the books in a Carousel */
+
+//     return (
+//       <>
+//         <h2>My Essential Lifelong Learning &amp; Formation Shelf</h2>
+
+//         {this.state.books.length ? (
+//           <p>Book Carousel coming soon</p>
+//         ) : (
+//           <h3>No Books Found :(</h3>
+//         )}
+//       </>
+//     )
+//   }
 }
 
 export default BestBooks;
