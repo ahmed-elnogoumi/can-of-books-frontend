@@ -34,7 +34,7 @@ function BestBooks()  {
               {book.description}
             </p>
             <p>
-              {book.status}
+              {book.status ? 'Read' : 'Unread'}
             </p>
           </div>
           </Carousel.Item>
@@ -45,23 +45,6 @@ function BestBooks()  {
     </Carousel>
     </div>
   );
-
-//   render() {
-
-//     /* TODO: render all the books in a Carousel */
-
-//     return (
-//       <>
-//         <h2>My Essential Lifelong Learning &amp; Formation Shelf</h2>
-
-//         {this.state.books.length ? (
-//           <p>Book Carousel coming soon</p>
-//         ) : (
-//           <h3>No Books Found :(</h3>
-//         )}
-//       </>
-//     )
-//   }
 }
 
 export default BestBooks;
