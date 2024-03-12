@@ -19,8 +19,8 @@ function BestBooks()  {
 
   return (
     <div>
-      <h1>Data from API:</h1>
-      <Carousel>
+      <h3>Our Books:</h3>
+      <Carousel style={{textAlign: 'center', height: '200px', backgroundColor: 'gray', paddingTop: '25px'}}>
       {
       data.length > 0 
       ?

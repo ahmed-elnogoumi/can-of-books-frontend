@@ -15,31 +15,31 @@ function BookForm() {
     let [status, setStatus] = useState(false);
     let [error, setError] = useState(null);
     const statusOptions = [
-        { name: 'Read', value: true },
-        { name: 'Unread', value: false }, 
+      { name: 'Read', value: true },
+      { name: 'Unread', value: false }, 
     ];
 
     const createBook = async (values) => {
-        let response = await axios.post('localhost:3001/books', values);
-        console.log(response.data);
+      let response = await axios.post('http://localhost:3001/books', values);
+      console.log(response.data);
     }
 
     const handleInput = (e) =>  {
-        let { name, value } = e.target;
+      let { name, value } = e.target;
 
-        switch(name) {
-            case 'title':
-              setTitle(value);
-              break;
-            case 'description':
-              setDescription(value);
-              break
-            case 'status':
-              setStatus(value);
-              break;
-            default:
-              setError('Invalid input value');
-        }
+      switch(name) {
+        case 'title':
+          setTitle(value);
+          break;
+        case 'description':
+          setDescription(value);
+          break
+        case 'status':
+          setStatus(value);
+          break;
+        default:
+          setError('Invalid input value');
+      }
     }
 
     const handleSubmit= (e) => {
@@ -49,10 +49,10 @@ function BookForm() {
         } catch (e) {
           setError('Error sending request :(');
         }
-      }
+    }
 
       return (
-        <Form onSubmit={handleSubmit}>
+        <Form onSubmit={handleSubmit} style={{width:'60vw', margin:'auto'}}>
           <h2>Enter your favorite book!</h2>
           <Form.Group className="mb-3">
             <Form.Label htmlFor="title">Book Title</Form.Label>
