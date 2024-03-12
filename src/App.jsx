@@ -3,18 +3,18 @@ import { useState } from 'react';
 
 import About from './About';
 import BestBooks from './BestBooks';
-import BookForm from './BookForm';
+
 import Header from './Header';
 import Footer from './Footer';
 
 import Button from 'react-bootstrap/Button';
-import Modal from 'react-bootstrap/Modal';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {
   BrowserRouter as Router,
   Routes,
   Route
 } from "react-router-dom";
+import BookFormModal from './BookFormModal';
 
 function App() {
   const [show, setShow] = useState(false);
@@ -24,19 +24,7 @@ function App() {
 
   return (
     <>
-    <Modal show={show} onHide={handleClose}>
-        <Modal.Header closeButton>
-          <Modal.Title>Book Form</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <BookForm />
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            Close
-          </Button>
-        </Modal.Footer>
-      </Modal>
+       <BookFormModal handleClose={handleClose} show={show} />
 
       <Router>
         <Header />
@@ -44,12 +32,13 @@ function App() {
           <Route exact path="/" element={<BestBooks />} />
           <Route exact path="/about" element={<About />} />
         </Routes>
-        <Footer />
+        
       </Router>
 
       <Button variant="primary" onClick={handleShow}>
-        Open Form
+        Add New Book
       </Button>
+      <Footer />
     </>
   );
 }
