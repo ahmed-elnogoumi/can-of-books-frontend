@@ -2,6 +2,7 @@ import React from 'react';
 import Header from './Header';
 import Footer from './Footer';
 import BestBooks from './BestBooks';
+import BookForm from './BookForm';
 import About from './About';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {
@@ -30,6 +31,8 @@ class App extends React.Component {
             >
             </Route>
           </Routes>
+          <BookForm>
+          </BookForm>
           <Footer />
         </Router>
       </>
