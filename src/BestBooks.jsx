@@ -1,6 +1,7 @@
 import React from 'react';
 import {useState, useEffect} from 'react';
 import Carousel from 'react-bootstrap/Carousel';
+import Button from 'react-bootstrap/Button';
 import axios from 'axios';
 import {Link} from 'react-router-dom';
 
@@ -17,10 +18,14 @@ function BestBooks()  {
       .catch(error => console.error('There was an error!', error));
   }, []); // Empty array means this effect runs once after the initial render
 
+  const handleDelete = async (id) => {
+    await axios.delete(SERVER_URL + `/pokemon/${id}`);
+  }
+
   return (
     <div>
       <h3>Our Books:</h3>
-      <Carousel style={{textAlign: 'center', height: '200px', backgroundColor: 'gray', paddingTop: '25px'}}>
+      <Carousel style={{textAlign: 'center', height: '250px', backgroundColor: 'gray', paddingTop: '25px'}}>
       {
       data.length > 0 
       ?
@@ -36,6 +41,7 @@ function BestBooks()  {
             <p>
               {book.status ? 'Read' : 'Unread'}
             </p>
+            <Button onClick={() => handleDelete(book._id)}>Delete</Button>
           </div>
           </Carousel.Item>
         ))
