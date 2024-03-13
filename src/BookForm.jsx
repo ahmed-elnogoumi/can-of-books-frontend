@@ -7,13 +7,21 @@ import ToggleButton from 'react-bootstrap/ToggleButton';
 
 import axios from 'axios';
 
-const SERVER_URL = import.meta.env.DATABASE_URL;
+const SERVER_URL = import.meta.env.VITE_DATABASE_URL;
 
-function BookForm() {
+function BookForm({bookId}) {
     let [title, setTitle] = useState('');
     let [description, setDescription] = useState('');
     let [status, setStatus] = useState(false);
     let [error, setError] = useState(null);
+
+    // update
+    const updateBooks = async(values) => {
+      let response = await axios.put(`${SERVER_URL}/books/${bookId}`, values);
+      console.log(response.data);
+    }
+
+
     const statusOptions = [
       { name: 'Read', value: true },
       { name: 'Unread', value: false }, 

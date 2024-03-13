@@ -5,12 +5,14 @@ import Button from 'react-bootstrap/Button';
 import axios from 'axios';
 import {Link} from 'react-router-dom';
 
+const SERVER_URL = import.meta.env.VITE_SERVER_URL;
+
 function BestBooks()  {
 
   const [data, setData] = useState([])
 
   useEffect(() => {
-    axios.get('http://localhost:3001/books')
+    axios.get(`${SERVER_URL}/books`)
       .then(response => {
         console.log(response.data);
         setData(response.data);
@@ -19,7 +21,7 @@ function BestBooks()  {
   }, []); // Empty array means this effect runs once after the initial render
 
   const handleDelete = async (id) => {
-    await axios.delete(SERVER_URL + `/pokemon/${id}`);
+    await axios.delete(`${SERVER_URL}/books/${id}`);
   }
 
   return (
