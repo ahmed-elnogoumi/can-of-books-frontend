@@ -7,7 +7,7 @@ import ToggleButton from 'react-bootstrap/ToggleButton';
 
 import axios from 'axios';
 
-const SERVER_URL = import.meta.env.VITE_DATABASE_URL;
+const SERVER_URL = import.meta.env.VITE_SERVER_URL;
 
 function BookForm({handleClose, bookId}) {
     let [title, setTitle] = useState('');
@@ -16,8 +16,8 @@ function BookForm({handleClose, bookId}) {
     let [error, setError] = useState(null);
 
     // update
-    const updateBook = async(values) => {
-      let response = await axios.put(`${SERVER_URL}/books/${bookId}`, values);
+    const updateBook = async(bookID, values) => {
+      let response = await axios.put(`${SERVER_URL}/books/${bookID}`, values);
       console.log(response.data);
     }
 
@@ -28,7 +28,7 @@ function BookForm({handleClose, bookId}) {
     ];
 
     const createBook = async (values) => {
-      let response = await axios.post('http://localhost:3001/books', values);
+      let response = await axios.post(`${SERVER_URL}/books`, values);
       console.log(response.data);
     }
 
@@ -54,7 +54,7 @@ function BookForm({handleClose, bookId}) {
         try {
           e.preventDefault();
           if (bookId) {
-            updateBook(bookId)
+            updateBook(bookId, { title, description, status })
           } else {
             createBook({ title, description, status });
           }
