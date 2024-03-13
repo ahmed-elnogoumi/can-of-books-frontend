@@ -47,7 +47,7 @@ function BestBooks(props)  {
             <p>
               {book.status ? 'Read' : 'Unread'}
             </p>
-            <Button onClick={() => props.handleShow()}>Update</Button>
+            <Button onClick={() => props.handleShow(book._id)}>Update</Button>
             <Button onClick={() => handleDelete(book._id)}>Delete</Button>
           </div>
           </Carousel.Item>

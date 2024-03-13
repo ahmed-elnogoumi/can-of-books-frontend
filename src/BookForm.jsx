@@ -9,14 +9,14 @@ import axios from 'axios';
 
 const SERVER_URL = import.meta.env.VITE_DATABASE_URL;
 
-function BookForm({bookId, handleClose}) {
+function BookForm({handleClose, bookId}) {
     let [title, setTitle] = useState('');
     let [description, setDescription] = useState('');
     let [status, setStatus] = useState(false);
     let [error, setError] = useState(null);
 
     // update
-    const updateBooks = async(values) => {
+    const updateBook = async(values) => {
       let response = await axios.put(`${SERVER_URL}/books/${bookId}`, values);
       console.log(response.data);
     }
@@ -53,7 +53,11 @@ function BookForm({bookId, handleClose}) {
     const handleSubmit= (e) => {
         try {
           e.preventDefault();
-          createBook({ title, description, status });
+          if (bookId) {
+            updateBook(bookId)
+          } else {
+            createBook({ title, description, status });
+          }
         } catch (e) {
           setError('Error sending request :(');
         }
@@ -61,7 +65,6 @@ function BookForm({bookId, handleClose}) {
 
       return (
         <Form onSubmit={handleSubmit} style={{ margin:'auto'}}>
-          <h2>Enter your favorite book!</h2>
           <Form.Group className="mb-3">
             <Form.Label htmlFor="title">Book Title</Form.Label>
             <Form.Control onChange={handleInput} name="title" id="title" placeholder="Words of Radiance" />
