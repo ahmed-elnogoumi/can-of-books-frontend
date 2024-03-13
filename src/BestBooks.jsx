@@ -8,6 +8,7 @@ import {Link} from 'react-router-dom';
 
 const SERVER_URL = import.meta.env.VITE_SERVER_URL;
 
+
 function BestBooks(props)  {
   const [data, setData] = useState([])
   useEffect(() => {
@@ -18,6 +19,8 @@ function BestBooks(props)  {
       })
       .catch(error => console.error('There was an error!', error));
   }, []); // Empty array means this effect runs once after the initial render
+
+
 
   const handleDelete = async (id) => {
 
@@ -44,6 +47,7 @@ function BestBooks(props)  {
             <p>
               {book.status ? 'Read' : 'Unread'}
             </p>
+            <Button onClick={() => props.handleShow()}>Update</Button>
             <Button onClick={() => handleDelete(book._id)}>Delete</Button>
           </div>
           </Carousel.Item>
