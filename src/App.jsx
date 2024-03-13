@@ -18,26 +18,23 @@ import BookFormModal from './BookFormModal';
 
 function App() {
   const [show, setShow] = useState(false);
+  const [moviesData, setMoviesData] = useState([])
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
+
   return (
     <>
-       <BookFormModal handleClose={handleClose} show={show} />
+      <BookFormModal handleClose={handleClose} show={show} />
 
       <Router>
         <Header />
         <Routes>
-          <Route exact path="/" element={<BestBooks />} />
+          <Route exact path="/" element={<BestBooks movies={moviesData} setMovies={setMoviesData} handleShow={handleShow} />} />
           <Route exact path="/about" element={<About />} />
         </Routes>
-        
       </Router>
-
-      <Button variant="primary" onClick={handleShow}>
-        Add New Book
-      </Button>
       <Footer />
     </>
   );

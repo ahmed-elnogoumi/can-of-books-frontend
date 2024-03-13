@@ -5,21 +5,19 @@ import Button from 'react-bootstrap/Button';
 import axios from 'axios';
 import {Link} from 'react-router-dom';
 
-function BestBooks()  {
-
-  const [data, setData] = useState([])
+function BestBooks(props)  {
 
   useEffect(() => {
     axios.get('http://localhost:3001/books')
       .then(response => {
         console.log(response.data);
-        setData(response.data);
+        props.setMovies(response.data);
       })
       .catch(error => console.error('There was an error!', error));
   }, []); // Empty array means this effect runs once after the initial render
 
   const handleDelete = async (id) => {
-    await axios.delete(SERVER_URL + `/pokemon/${id}`);
+    await axios.delete(`http://localhost:3001/books/${id}`);
   }
 
   return (
@@ -27,9 +25,9 @@ function BestBooks()  {
       <h3>Our Books:</h3>
       <Carousel style={{textAlign: 'center', height: '250px', backgroundColor: 'gray', paddingTop: '25px'}}>
       {
-      data.length > 0 
+      props.movies.length > 0 
       ?
-        data.map((book, idx) => (
+        props.movies.map((book, idx) => (
           <Carousel.Item key={idx}>
           <div>
             <p>
@@ -49,6 +47,9 @@ function BestBooks()  {
       <p>No results found</p>
       }
     </Carousel>
+    <Button style={{margin: '30px'}} variant="primary" onClick={() => props.handleShow()}>
+        Add New Book
+    </Button>
     </div>
   );
 }
