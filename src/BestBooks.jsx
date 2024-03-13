@@ -5,10 +5,14 @@ import Button from 'react-bootstrap/Button';
 import axios from 'axios';
 import {Link} from 'react-router-dom';
 
-function BestBooks(props)  {
 
+const SERVER_URL = import.meta.env.VITE_SERVER_URL;
+
+
+function BestBooks(props)  {
+  const [data, setData] = useState([])
   useEffect(() => {
-    axios.get('http://localhost:3001/books')
+    axios.get(`${SERVER_URL}/books`)
       .then(response => {
         console.log(response.data);
         props.setMovies(response.data);
@@ -16,8 +20,12 @@ function BestBooks(props)  {
       .catch(error => console.error('There was an error!', error));
   }, []); // Empty array means this effect runs once after the initial render
 
+
+
   const handleDelete = async (id) => {
-    await axios.delete(`http://localhost:3001/books/${id}`);
+
+    await axios.delete(`${SERVER_URL}/books/${id}`);
+
   }
 
   return (
@@ -39,6 +47,7 @@ function BestBooks(props)  {
             <p>
               {book.status ? 'Read' : 'Unread'}
             </p>
+            <Button onClick={() => props.handleShow(book._id)}>Update</Button>
             <Button onClick={() => handleDelete(book._id)}>Delete</Button>
           </div>
           </Carousel.Item>

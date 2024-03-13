@@ -7,20 +7,28 @@ import ToggleButton from 'react-bootstrap/ToggleButton';
 
 import axios from 'axios';
 
-const SERVER_URL = import.meta.env.DATABASE_URL;
+const SERVER_URL = import.meta.env.VITE_SERVER_URL;
 
-function BookForm() {
+function BookForm({handleClose, bookId}) {
     let [title, setTitle] = useState('');
     let [description, setDescription] = useState('');
     let [status, setStatus] = useState(false);
     let [error, setError] = useState(null);
+
+    // update
+    const updateBook = async(bookID, values) => {
+      let response = await axios.put(`${SERVER_URL}/books/${bookID}`, values);
+      console.log(response.data);
+    }
+
+
     const statusOptions = [
       { name: 'Read', value: true },
       { name: 'Unread', value: false }, 
     ];
 
     const createBook = async (values) => {
-      let response = await axios.post('http://localhost:3001/books', values);
+      let response = await axios.post(`${SERVER_URL}/books`, values);
       console.log(response.data);
     }
 
@@ -45,7 +53,11 @@ function BookForm() {
     const handleSubmit= (e) => {
         try {
           e.preventDefault();
-          createBook({ title, description, status });
+          if (bookId) {
+            updateBook(bookId, { title, description, status })
+          } else {
+            createBook({ title, description, status });
+          }
         } catch (e) {
           setError('Error sending request :(');
         }
@@ -53,7 +65,6 @@ function BookForm() {
 
       return (
         <Form onSubmit={handleSubmit} style={{ margin:'auto'}}>
-          <h2>Enter your favorite book!</h2>
           <Form.Group className="mb-3">
             <Form.Label htmlFor="title">Book Title</Form.Label>
             <Form.Control onChange={handleInput} name="title" id="title" placeholder="Words of Radiance" />
@@ -77,7 +88,7 @@ function BookForm() {
                 </ToggleButton>
             ))}
             </ButtonGroup>
-          <Button type="submit">Submit</Button>
+          <Button type="submit" onClick={() => handleClose()}>Submit</Button>
         </Form>
       )
     }
