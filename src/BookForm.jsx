@@ -9,7 +9,7 @@ import axios from 'axios';
 
 const SERVER_URL = import.meta.env.VITE_DATABASE_URL;
 
-function BookForm({bookId}) {
+function BookForm({bookId, handleClose}) {
     let [title, setTitle] = useState('');
     let [description, setDescription] = useState('');
     let [status, setStatus] = useState(false);
@@ -85,7 +85,7 @@ function BookForm({bookId}) {
                 </ToggleButton>
             ))}
             </ButtonGroup>
-          <Button type="submit">Submit</Button>
+          <Button type="submit" onClick={() => handleClose()}>Submit</Button>
         </Form>
       )
     }

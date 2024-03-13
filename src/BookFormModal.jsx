@@ -10,7 +10,7 @@ function BookFormModal(props) {
                 <Modal.Title>Book Form</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-                <BookForm />
+                <BookForm handleClose={props.handleClose}/>
             </Modal.Body>
         </Modal>
     )
