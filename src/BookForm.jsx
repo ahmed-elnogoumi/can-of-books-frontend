@@ -4,7 +4,7 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import ToggleButton from 'react-bootstrap/ToggleButton';
-
+import {useAuth0} from '@auth0/auth0-react';
 
 import axios from 'axios';
 
@@ -15,6 +15,14 @@ function BookForm({handleClose, bookId}) {
     let [description, setDescription] = useState('');
     let [status, setStatus] = useState(false);
     let [error, setError] = useState(null);
+   
+    let {getIdTokenClaims} = useAuth0();
+
+    const fetchToken = async () => {
+      let response = await getIdTokenClaims();
+      console.log(response);
+      return response.__raw;
+    }
 
     // update
     const updateBook = async(bookID, values) => {
@@ -29,7 +37,11 @@ function BookForm({handleClose, bookId}) {
     ];
 
     const createBook = async (values) => {
-      let response = await axios.post(`${SERVER_URL}/books`, values);
+      let token = await fetchToken();
+      let headers = {
+        'Authorization' : `Bearer ${token}`
+      }
+      let response = await axios.post(`${SERVER_URL}/books`, {...values}, {headers});
       console.log(response.data);
     }
 

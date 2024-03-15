@@ -9,7 +9,7 @@ import Footer from './Footer';
 
 import Button from 'react-bootstrap/Button';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import LoginButton from './LoginButton';
+import AuthButtons from './auth/AuthButtons.jsx';
 import {useAuth0} from '@auth0/auth0-react';
 
 import {
@@ -20,21 +20,16 @@ import {
 import BookFormModal from './BookFormModal';
 
 function App() {
-
-  let {getIdTokenClaims} = useAuth0();
-
-  const fetchToken = async () => {
-    let response = await getIdTokenClaims();
-    console.log(response);
-  }
-
-  useEffect(()=>{
-    fetchToken();
-  });
-
+  
   const [show, setShow] = useState(false);
   const [moviesData, setMoviesData] = useState([])
   const [bookId, setBookId] = useState(null);
+
+  let {isLoading, isAuthenticated} = useAuth0();
+
+  useEffect(() => {
+    console.log('LOADING FROM AUTH0', isLoading);
+  });
 
   const handleClose = () => setShow(false);
   const handleShow = (id) => {
@@ -49,11 +44,11 @@ function App() {
       <Router>
         <Header />
         <Routes>
-          <Route exact path="/" element={<BestBooks movies={moviesData} setMovies={setMoviesData} handleShow={handleShow} />} />
+          <Route exact path="/" element={!isAuthenticated ? <p>Welcome! Please Log in!</p> : <BestBooks movies={moviesData} setMovies={setMoviesData} handleShow={handleShow} />} />
           <Route exact path="/about" element={<About />} />
         </Routes>
       </Router>
-      <LoginButton></LoginButton>
+        <AuthButtons />
       <Footer />
     </>
   );
