@@ -12,6 +12,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import AuthButtons from './auth/AuthButtons.jsx';
 import {useAuth0} from '@auth0/auth0-react';
 
+import Profile from './Profile.jsx';
+
 import {
   BrowserRouter as Router,
   Routes,
@@ -20,7 +22,7 @@ import {
 import BookFormModal from './BookFormModal';
 
 function App() {
-  
+
   const [show, setShow] = useState(false);
   const [moviesData, setMoviesData] = useState([])
   const [bookId, setBookId] = useState(null);
@@ -46,6 +48,7 @@ function App() {
         <Routes>
           <Route exact path="/" element={!isAuthenticated ? <p>Welcome! Please Log in!</p> : <BestBooks movies={moviesData} setMovies={setMoviesData} handleShow={handleShow} />} />
           <Route exact path="/about" element={<About />} />
+          <Route path="/profile" element={<Profile />}/>
         </Routes>
       </Router>
         <AuthButtons />

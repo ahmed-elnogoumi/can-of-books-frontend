@@ -39,8 +39,12 @@ function BestBooks(props)  {
 
 
   const handleDelete = async (id) => {
+    let token = await fetchToken();
+    let headers = {
+      'Authorization': `Bearer ${token}`
+    }
 
-    await axios.delete(`${SERVER_URL}/books/${id}`);
+    await axios.delete(`${SERVER_URL}/books/${id}`, { headers });
 
   }
 

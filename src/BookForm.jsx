@@ -26,7 +26,11 @@ function BookForm({handleClose, bookId}) {
 
     // update
     const updateBook = async(bookID, values) => {
-      let response = await axios.put(`${SERVER_URL}/books/${bookID}`, values);
+      let token = await fetchToken();
+      let headers = {
+        'Authorization': `Bearer ${token}` 
+      }
+      let response = await axios.put(`${SERVER_URL}/books/${bookID}`, values, {headers});
       console.log(response.data);
     }
 
