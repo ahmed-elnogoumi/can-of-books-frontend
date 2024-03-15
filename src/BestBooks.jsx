@@ -3,7 +3,7 @@ import {useState, useEffect} from 'react';
 import Carousel from 'react-bootstrap/Carousel';
 import Button from 'react-bootstrap/Button';
 import axios from 'axios';
-import { useAuth0 } from '@auth0/auth0-react';
+import {useAuth0} from '@auth0/auth0-react'
 import {Link} from 'react-router-dom';
 
 
@@ -12,16 +12,8 @@ const SERVER_URL = import.meta.env.VITE_SERVER_URL;
 
 function BestBooks(props)  {
   const [data, setData] = useState([])
-  useEffect(() => {
-    axios.get(`${SERVER_URL}/books`)
-      .then(response => {
-        console.log(response.data);
-        props.setMovies(response.data);
-      })
-      .catch(error => console.error('There was an error!', error));
-  }, []); // Empty array means this effect runs once after the initial render
 
-  let {getIdTokenClaims, isAuthenticated, user} = useAuth0();
+  let {getIdTokenClaims, isAuthenticated, User} = useAuth0();
 
   const fetchToken = async () => {
     let response = await getIdTokenClaims();
@@ -29,20 +21,21 @@ function BestBooks(props)  {
   }
 
   useEffect(() => {
-    console.log("this will run before my app render");
     if (isAuthenticated) {
-      console.log('THIS IS THE CURRENT USER', user);
-      // you can set state here! without triggering an infinite re-render.
-      fetchToken()
+      fetchToken() 
         .then(token => {
-          console.log('TOKEN FROM AUTH0', token);
-          axios.get(SERVER_URL + '/books', { headers: { "Authorization": `Bearer ${token}` }})
-            .then(response => setBooks(response.data));
-        });
-    } else {
-      console.log('User not authenticated');
+          axios.get(`${SERVER_URL}/books`, { headers: {"Authorization": `Bearer ${token}`}})
+            .then(response => {
+              console.log(response.data);
+              props.setMovies(response.data);
+            })
+            .catch(error => console.error('There was an error!', error));
+        })
     }
-  }, [isAuthenticated]);
+
+    
+  }, [isAuthenticated]); // Empty array means this effect runs once after the initial render
+
 
 
   const handleDelete = async (id) => {
