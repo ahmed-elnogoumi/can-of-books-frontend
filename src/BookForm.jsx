@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Auth0Provider } from '@auth0/auth0-react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
